@@ -44,6 +44,9 @@ export const router = createBrowserRouter([
         loader: ({ params }) => params.bookId,
         element: <BookPage />,
       },
+      {
+        path: "/request-book",
+      },
     ],
   },
   {

@@ -12,6 +12,8 @@ import MyProfile from "../pages/dashboard/profile/MyProfile";
 import MyBook from "../pages/dashboard/myBook/MyBook";
 import BorrowRequests from "../pages/dashboard/borrowRequest/BorrowRequests";
 import AddBook from "../pages/dashboard/addBook/AddBook";
+import BookRequests from "../pages/dashboard/bookRequest/BookRequest";
+import BooksAdmin from "../pages/dashboard/book/BooksAdmin";
 
 export const router = createBrowserRouter([
   {
@@ -71,8 +73,16 @@ export const router = createBrowserRouter([
         element: <BorrowRequests />,
       },
       {
+        path: "/dashboard/books",
+        element: <BooksAdmin />,
+      },
+      {
         path: "/dashboard/add-book",
         element: <AddBook />,
+      },
+      {
+        path: "/dashboard/Book-requests",
+        element: <BookRequests />,
       },
     ],
   },

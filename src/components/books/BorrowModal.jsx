@@ -10,11 +10,14 @@ const BorrowModal = ({ bookId }) => {
           <div className="modal-action">
             <label
               htmlFor="my_modal_6"
-              className="p-btn rounded-full !bg-error"
+              className="p-btn rounded-full !bg-error cursor-pointer"
             >
               Cancel
             </label>
-            <label htmlFor="my_modal_6" className="p-btn rounded-full">
+            <label
+              htmlFor="my_modal_6"
+              className="p-btn rounded-full cursor-pointer"
+            >
               Confirm
             </label>
           </div>

@@ -25,13 +25,22 @@ const BorrowCard = ({ borrow }) => {
           </p>
           <div>
             <h2>
-              status: <span>Pending</span>
+              status:{" "}
+              <span className="text-sm md:text-base font-semibold">
+                Pending
+              </span>
             </h2>
             <h2>
-              Borrowed at: <span>3rd May</span>
+              Borrowed at:{" "}
+              <span className="text-sm md:text-base font-semibold">
+                3rd May
+              </span>
             </h2>
             <h2>
-              Returned at: <span>10th May</span>
+              Returned at:{" "}
+              <span className="text-sm md:text-base font-semibold">
+                10th May
+              </span>
             </h2>
           </div>
         </div>

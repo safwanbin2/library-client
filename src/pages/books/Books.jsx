@@ -54,17 +54,19 @@ const Books = () => {
       <div className="text-center">
         <div className="join">
           <button
-            className="join-item btn"
+            className="join-item px-3 py-2 bg-base-200"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
           >
             «
           </button>
 
-          <button className={`join-item btn`}>{currentPage}</button>
+          <button className={`join-item px-3 py-2 bg-base-300`}>
+            {currentPage}
+          </button>
 
           <button
-            className="join-item btn"
+            className="join-item px-3 py-2 bg-base-200"
             onClick={() => handlePageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

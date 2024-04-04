@@ -89,6 +89,22 @@ const BookInformation = ({ book, refetch }) => {
                 <h4 className="font-semibold">Pages</h4>
                 <p className="">240</p>
               </div>
+              <div className="flex justify-between">
+                <h4 className="font-semibold">Rating</h4>
+                <div className="flex items-center">
+                  <RiStarSLine className="text-xl text-yellow-500" />
+                  <span className="">
+                    {/* {(isNaN(Number(totalRating) / Number(reviewer))
+                ? 0
+                : Number(totalRating) / Number(reviewer) > 5
+                ? 5
+                : parseFloat(Number(totalRating) / Number(reviewer)).toFixed(
+                    1
+                  )) || 0} */}
+                    5
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

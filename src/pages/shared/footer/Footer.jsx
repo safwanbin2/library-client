@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-base-200 ">
+    <footer className="bg-base-100 ">
       <div className="footer py-10  text-base-content w-11/12 mx-auto">
         <div>
           <Link

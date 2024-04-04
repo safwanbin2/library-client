@@ -11,6 +11,7 @@ import { CiSquareQuestion } from "react-icons/ci";
 import { VscNewFile } from "react-icons/vsc";
 import { toast } from "sonner";
 import config from "../../config";
+import { SiBookstack } from "react-icons/si";
 
 const DashboardLayout = () => {
   const { logOut, userDB } = useContext(AuthContext);
@@ -36,7 +37,7 @@ const DashboardLayout = () => {
         });
     }
   };
-  console.log(isOpen);
+
   const sideLinks = (
     <>
       <li>
@@ -75,7 +76,20 @@ const DashboardLayout = () => {
           }
         >
           <FaBook className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-          <span className="flex-1 ml-3 whitespace-nowrap">My Books</span>
+          <span className="flex-1 ml-3 whitespace-nowrap">My Borrowings</span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/dashboard/books"
+          className={({ isActive, isPending }) =>
+            `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+              isActive ? "bg-primary text-white" : ""
+            }`
+          }
+        >
+          <SiBookstack className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+          <span className="flex-1 ml-3 whitespace-nowrap">Books</span>
         </NavLink>
       </li>
       <li>

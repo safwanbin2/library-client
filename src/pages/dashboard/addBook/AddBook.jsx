@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
+import UploadBookImage from "../../../components/dashboard/addBook/UploadBookImage";
 
 const AddBook = () => {
   const { user, userDB, setRefetchUserDB } = useContext(AuthContext);
@@ -20,7 +21,7 @@ const AddBook = () => {
     <div className="flex flex-col justify-start items-center gap-5">
       <form
         onSubmit={handleSubmit(handleAddBook)}
-        className="mt-2 w-full space-y-4"
+        className="mt-2 w-full space-y-2 md:space-y-4"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
           <div className="form-control">
@@ -165,6 +166,14 @@ const AddBook = () => {
                 </span>
               </label>
             )}
+          </div>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+          <div className="form-control">
+            <label className="label ps-0">
+              <span className="">Image</span>
+            </label>
+            <UploadBookImage />
           </div>
         </div>
         <button type="submit" className="p-btn rounded-full !py-2 !px-4">

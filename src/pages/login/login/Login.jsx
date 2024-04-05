@@ -87,16 +87,6 @@ const Login = () => {
         <h2 className="text-xl font-medium text-gray-600 mb-2">
           Login to your Account!
         </h2>
-        <p className="text-sm">
-          Don't have an account?{" "}
-          <Link
-            className="font-semibold tracking-wider text-grey"
-            to="/register"
-          >
-            Register
-          </Link>{" "}
-          here
-        </p>
         <form onSubmit={handleSubmit(handleLogin)} className="mt-2">
           <div className="grid grid-cols-1 gap-2 mb-2">
             <div className="form-control mb-2">
@@ -109,7 +99,7 @@ const Login = () => {
                 })}
                 type="email"
                 placeholder="email"
-                className="border rounded-full focus:outline-none p-2 w-full bg-transparent"
+                className="border rounded-lg focus:outline-none p-2 w-full bg-transparent"
               />
               {errors.email && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -127,7 +117,7 @@ const Login = () => {
                 })}
                 type="password"
                 placeholder="password"
-                className="border focus:outline-none rounded-full p-2 w-full bg-transparent"
+                className="border focus:outline-none rounded-lg p-2 w-full bg-transparent"
               />
               {errors.password && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -135,9 +125,9 @@ const Login = () => {
                 </label>
               )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center mt-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center mt-2 gap-4">
               <button
-                className="px-10 py-2 bg-primary text-white rounded-3xl hover:shadow-lg"
+                className="px-10 py-2 bg-primary text-white rounded-lg hover:shadow-lg shadow"
                 type="submit"
               >
                 Login
@@ -145,12 +135,22 @@ const Login = () => {
               {/* <div className="divider bg-primary"></div> */}
               <button
                 onClick={() => handleLogInWithGoogle()}
-                className="px-10 py-2 bg-white text-primary  rounded-3xl hover:shadow-lg flex justify-center items-center shadow-lg border"
+                className="px-10 py-2 bg-white text-primary  rounded-lg hover:shadow-lg flex justify-center items-center shadow border"
               >
                 <FcGoogle className="text-2xl" />
                 <p>oogle</p>
               </button>
             </div>
+            <p className="text-sm">
+              Don't have an account?{" "}
+              <Link
+                className="font-semibold tracking-wider text-grey"
+                to="/register"
+              >
+                Register
+              </Link>{" "}
+              here
+            </p>
           </div>
         </form>
       </div>

@@ -113,13 +113,7 @@ const Register = () => {
         <h2 className="text-xl font-medium text-gray-600 mb-2">
           Create your Account!
         </h2>
-        <p className="text-sm">
-          Already have account?{" "}
-          <Link className="font-semibold tracking-wider text-grey" to="/login">
-            Login
-          </Link>{" "}
-          here
-        </p>
+
         <form onSubmit={handleSubmit(handleRegister)} className="mt-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mb-2">
             <div className="form-control">
@@ -132,7 +126,7 @@ const Register = () => {
                 })}
                 type="text"
                 placeholder="first name"
-                className="border rounded-full focus:outline-none p-2  w-full bg-transparent"
+                className="border rounded-lg focus:outline-none p-2  w-full bg-transparent"
               />
               {errors.firstName && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -150,7 +144,7 @@ const Register = () => {
                 })}
                 type="text"
                 placeholder="last name"
-                className="border rounded-full focus:outline-none p-2  w-full bg-transparent"
+                className="border rounded-lg focus:outline-none p-2  w-full bg-transparent"
               />
               {errors.lastName && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -170,7 +164,7 @@ const Register = () => {
                 })}
                 type="email"
                 placeholder="email"
-                className="border rounded-full focus:outline-none p-2  w-full bg-transparent"
+                className="border rounded-lg focus:outline-none p-2  w-full bg-transparent"
               />
               {errors.email && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -211,7 +205,7 @@ const Register = () => {
                 })}
                 type="password"
                 placeholder="password"
-                className="border rounded-full focus:outline-none p-2  w-full bg-transparent"
+                className="border rounded-lg focus:outline-none p-2  w-full bg-transparent"
               />
               {errors.password && errors.password.type === "required" && (
                 <label className="label text-red-400 text-xs ps-0">
@@ -227,36 +221,31 @@ const Register = () => {
               )}
             </div>
           </div>
-          {/* <div className="form-control mb-4">
-            <label className="cursor-pointer px-0 label justify-start gap-2">
-              <input
-                onClick={() => setConsent(!consent)}
-                type="checkbox"
-                className="checkbox checkbox-success h-5 w-5"
-              />
-              <span className="label-text text-base text-gray-600">
-                I agree to rating's{" "}
-                <Link className="text-blue-500">Terms of Use</Link> ,{" "}
-                <Link className="text-blue-500">Privacy Policy</Link>, and{" "}
-                <Link className="text-blue-500">Cookie Policy</Link>
-              </span>
-            </label>
-          </div> */}
-          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center mt-6 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center mt-6 mb-2 gap-4">
             <button
-              className="px-10 py-2 bg-primary text-white rounded-3xl hover:shadow-lg"
+              className="px-10 py-2 bg-primary text-white rounded-lg shadow hover:shadow-lg"
               type="submit"
             >
               Create Account
             </button>
             <button
               onClick={() => handleLogInWithGoogle()}
-              className="px-10 py-2 bg-white text-primary  rounded-3xl hover:shadow-lg flex justify-center items-center shadow-lg border"
+              className="px-10 py-2 bg-white text-primary  rounded-lg hover:shadow-lg flex justify-center items-center shadow border"
             >
               <FcGoogle className="text-2xl" />
               <p>oogle</p>
             </button>
           </div>
+          <p className="text-sm">
+            Already have account?{" "}
+            <Link
+              className="font-semibold tracking-wider text-grey"
+              to="/login"
+            >
+              Login
+            </Link>{" "}
+            here
+          </p>
         </form>
       </div>
     </div>

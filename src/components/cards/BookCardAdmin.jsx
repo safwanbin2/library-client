@@ -2,6 +2,7 @@ import React from "react";
 import { RiStarSLine } from "react-icons/ri";
 import { CiMenuKebab } from "react-icons/ci";
 import { Link } from "react-router-dom";
+import bookPhoto from "../../assets/book.jpg";
 
 const BookCardAdmin = ({ book }) => {
   const { _id } = book ?? {};
@@ -9,8 +10,8 @@ const BookCardAdmin = ({ book }) => {
   return (
     <div className="md:space-y-2">
       <img
-        // src={photo ? photo : unknown}
-        className="rounded-t-xl w-full h-36 md:h-44 lg:h-56"
+        src={bookPhoto}
+        className="rounded-t-xl w-full h-36 md:h-44 lg:h-64"
         alt=""
       />
       <div className="p-2 space-y-2">

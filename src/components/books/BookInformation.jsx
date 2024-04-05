@@ -41,8 +41,8 @@ const BookInformation = ({ book, refetch }) => {
   return (
     <>
       <div className="space-y-16">
-        <div className="grid grid-cols-7 items-start space-y-2 gap-10">
-          <div className="col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-7 items-start space-y-2 gap-5 md:gap-10">
+          <div className="md:col-span-2">
             <PhotoProvider>
               <PhotoView src={bookPhoto}>
                 <img
@@ -53,7 +53,7 @@ const BookInformation = ({ book, refetch }) => {
               </PhotoView>
             </PhotoProvider>
           </div>
-          <div className="col-span-5 space-y-8 text-gray-600">
+          <div className="md:col-span-5 space-y-8 text-gray-600">
             <div>
               <h2 className="font-bold text-2xl">Test Title</h2>
               <h3>

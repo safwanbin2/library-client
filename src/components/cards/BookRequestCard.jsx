@@ -33,14 +33,19 @@ const BookRequestCard = ({ request }) => {
             </h2>
             <h2 className="">
               Email:
-              <span className="font-semibold link">example@email.com</span>
+              <span className="font-semibold">example@email.com</span>
             </h2>
           </div>
         </div>
         <div>
           <h2 className="">
             Book:
-            <span className="text-sm md:text-base font-semibold">Name</span>
+            <Link
+              to={`/books/3`}
+              className="text-sm md:text-base font-semibold link"
+            >
+              Name
+            </Link>
           </h2>
           <h2 className="">
             Details:

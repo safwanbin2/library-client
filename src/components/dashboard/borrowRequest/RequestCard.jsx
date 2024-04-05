@@ -34,14 +34,14 @@ const RequestCard = ({ request }) => {
             Test Book <span>(Author)</span>
           </Link>
         </div>
-        <div>
+        <div className="text-sm md:text-base">
           <h2 className="">
             Borrower:
-            <span className="font-semibold link">Name</span>
+            <span className="font-semibold">Name</span>
           </h2>
           <h2 className="">
             Email:
-            <span className="font-semibold link">example@email.com</span>
+            <span className="font-semibold">example@email.com</span>
           </h2>
           <div>
             <h2>

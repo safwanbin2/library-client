@@ -16,7 +16,7 @@ const Hero = () => {
       return toast.info("Write something");
     }
     setFilterObject((prev) => ({ ...prev, searchTerm: searchText }));
-    navigate("/");
+    navigate("/books");
   };
 
   // useEffect(() => {

@@ -36,7 +36,9 @@ const FilterForm = () => {
           onChange={(e) => setGenre(e.target.value)}
           className="select select-bordered focus:outline-none rounded-full !px-3 w-6/12 md:w-2/12 shadow"
         >
-          <option selected>All</option>
+          <option value="" selected>
+            All
+          </option>
           <option value="action">Action</option>
           <option value="thriller">Thriller</option>
         </select>

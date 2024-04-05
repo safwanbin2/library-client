@@ -76,7 +76,7 @@ const AuthProvider = ({ children }) => {
   //       });
   //   }
   // }, [user, user?.email, refetchUserDB]);
-
+  console.log({ user, userDB });
   const authInfo = {
     user,
     userDB,

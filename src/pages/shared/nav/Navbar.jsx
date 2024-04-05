@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BsPerson } from "react-icons/bs";
 import { BiSearchAlt2 } from "react-icons/bi";
@@ -9,11 +9,28 @@ import RequestBookModal from "../../../components/requestBook/RequestBookModal";
 const Navbar = () => {
   const { user, userDB } = useContext(AuthContext);
   const [navbar, setNavbar] = useState(false);
+  const [scroll, setScroll] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setScroll(scrollY > 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup function to remove event listener when component unmounts
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   const NavLinks = (
     <>
       <>
-        <li className="text-gray-600 text-base dropdown dropdown-hover me-4 md:py-4 hover:text-primary transition-all duration-300">
+        <li
+          className={`text-gray-600 text-base dropdown dropdown-hover me-4 md:py-4 hover:text-primary transition-all duration-300`}
+        >
           <Link
             to="/books"
             className="flex flex-col justify-center items-center gap-[2px]"
@@ -78,7 +95,9 @@ const Navbar = () => {
   return (
     <>
       <nav
-        className={`bg-base-100 shadow-lg z-10 transition-all duration-500 w-full fixed top-0 left-0 `}
+        className={`bg-base-100 shadow-lg z-10 transition-all duration-500 w-full fixed top-0 left-0 ${
+          scroll ? " bg-opacity-50 backdrop-filter backdrop-blur-lg" : ""
+        }`}
       >
         <div className={`${navbar ? "bg-base-100 shadow" : ""} py-2 md:py-0`}>
           <div className="justify-between w-11/12 mx-auto md:items-center md:flex">

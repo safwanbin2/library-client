@@ -40,10 +40,12 @@ const Hero = () => {
   return (
     <div className="min-h-screen hero">
       <div className="w-11/12 mx-auto flex justify-center items-center flex-col min-h-screen pt-28 pb-20 text-gray-100 gap-5">
-        <h1 className="text-6xl font-semibold">
+        <h1 className="text-4xl md:text-6xl font-semibold">
           Welcome to <span className="text-primary">University Library</span>
         </h1>
-        <h1 className="text-6xl font-semibold">Your all-in-one library</h1>
+        <h1 className="text-4xl md:text-6xl font-semibold">
+          Your all-in-one library
+        </h1>
         <p>Register now for unlimited access to books and resources</p>
         <form
           onSubmit={handleExplore}

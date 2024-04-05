@@ -1,21 +1,16 @@
 import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import { FcGoogle } from "react-icons/fc";
+
 import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
 import { toast } from "sonner";
 import LoadingScreen from "../../../components/LoadingScreen";
-import config from "../../../config";
+
+import axios from "axios";
 
 const Register = () => {
-  const {
-    isLoading,
-    setIsLoading,
-    logInWithGoogle,
-    createUserWithEmail,
-    update,
-  } = useContext(AuthContext);
-  // const [consent, setConsent] = useState(false);
+  const { isLoading, setUserRefetch, userRefetch } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const {
     register,
@@ -23,84 +18,41 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const handleRegister = (data) => {
-    createUserWithEmail(data.email, data.password)
-      .then((result) => {
-        const user = result.user;
-        if (user.uid) {
-          update(`${data.firstName} ${data.lastName}`);
-          let newUser = {
-            email: user?.email || data?.email,
-            firstName: data?.firstName,
-            lastName: data?.lastName,
-          };
+  const [loading, setLoading] = useState(false);
 
-          fetch(`${config.base_url}/users`, {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(newUser),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setIsLoading(false);
-              toast.success(`Logged in`);
-              return navigate("/");
-            });
-        }
-        setIsLoading(false);
-        navigate("/");
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-        if (err.message) {
-          return toast.error(err.message);
-        }
-        toast.error("Error creating account");
-      });
-  };
+  const handleRegister = async (values) => {
+    // console.log(values);
 
-  const handleLogInWithGoogle = () => {
-    logInWithGoogle()
-      .then((result) => {
-        const user = result.user;
-        if (user.uid) {
-          setIsLoading(true);
-          let newUser = {
-            email: user?.email,
-            firstName: user?.displayName,
-            lastName: null,
-            photo: user?.photoURL,
-          };
+    setLoading(true);
+    const payload = {
+      ...values,
+      name: values.firstName + " " + values.lastName,
+    };
 
-          fetch(`${config.base_url}/users`, {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(newUser),
-          })
-            .then((res) => res.json())
-            .then((data) => {
-              setIsLoading(false);
-              toast.success(`Logged in`);
-              return navigate("/");
-            });
-
-          setIsLoading(false);
+    try {
+      const promise = await axios.post(`/users/signup`, payload);
+      if (promise.status === 200) {
+        localStorage.setItem("accessToken", promise.data.data);
+        setUserRefetch(!userRefetch);
+        setTimeout(() => {
+          toast.success(`Sign up Successfull`, {
+            id: "Signup",
+            duration: 2000,
+            position: "top-right",
+          });
           navigate("/");
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setIsLoading(false);
-        if (err.message) {
-          return toast.error(err.message);
-        }
-        toast.error("Error Occured");
+          setLoading(false);
+        }, 2000);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      return toast.error(error.response.data.message || `Signup failed`, {
+        id: "Signup",
+        duration: 2000,
+        position: "top-right",
       });
+    }
   };
 
   if (isLoading) {
@@ -221,19 +173,13 @@ const Register = () => {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 justify-center items-center mt-6 mb-2 gap-4">
+          <div className=" mt-6 mb-2 gap-4">
             <button
-              className="px-10 py-2 bg-primary text-white rounded-lg shadow hover:shadow-lg"
+              disabled={loading}
+              className="px-10 py-2 bg-primary text-white rounded-lg shadow hover:shadow-lg w-full"
               type="submit"
             >
-              Create Account
-            </button>
-            <button
-              onClick={() => handleLogInWithGoogle()}
-              className="px-10 py-2 bg-white text-primary  rounded-lg hover:shadow-lg flex justify-center items-center shadow border"
-            >
-              <FcGoogle className="text-2xl" />
-              <p>oogle</p>
+              {loading ? "Creating.." : "Create Account"}
             </button>
           </div>
           <p className="text-sm">

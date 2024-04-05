@@ -11,12 +11,16 @@ import {
   updateProfile,
 } from "firebase/auth";
 import app from "../../firebase/firebase.init";
-import config from "../../config";
+
+import axios from "axios";
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 export const AuthContext = createContext();
+
+// axios.defaults.baseURL = "https://book-management-backend-pi.vercel.app/api/v1";
+axios.defaults.baseURL = "http://localhost:5000/api/v1";
 
 const AuthProvider = ({ children }) => {
   // states for holding user info
@@ -25,7 +29,7 @@ const AuthProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [filterObject, setFilterObject] = useState({});
   const [refetchUserDB, setRefetchUserDB] = useState(false);
-
+  const [userRefetch, setUserRefetch] = useState(false);
   const createUserWithEmail = (email, password) => {
     setIsLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
@@ -64,6 +68,32 @@ const AuthProvider = ({ children }) => {
     };
   }, []);
 
+  const token = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const getProfile = async () => {
+      setIsLoading(true);
+
+      try {
+        const promise = await axios.get(`/users/profile`, {
+          headers: {
+            authorization: `${token}`,
+          },
+        });
+
+        setUserDB(promise.data.data);
+        setIsLoading(false);
+      } catch (error) {
+        console.log(error);
+        setIsLoading(false);
+        if (error.response.data.message === "Invalid Token!") {
+          localStorage.removeItem("accessToken");
+        }
+      }
+    };
+
+    getProfile();
+  }, [user, user?.email, token, userRefetch]);
+
   // Getting the user from mongodb database
   // useEffect(() => {
   //   if (user?.email) {
@@ -91,6 +121,8 @@ const AuthProvider = ({ children }) => {
     setRefetchUserDB,
     filterObject,
     setFilterObject,
+    setUserRefetch,
+    userRefetch,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

@@ -1,13 +1,10 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { BsPerson } from "react-icons/bs";
-import { BiSearchAlt2 } from "react-icons/bi";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
-import unknown from "../../../assets/unknown.png";
 import RequestBookModal from "../../../components/requestBook/RequestBookModal";
 
 const Navbar = () => {
-  const { user, userDB } = useContext(AuthContext);
+  const { userDB } = useContext(AuthContext);
   const [navbar, setNavbar] = useState(false);
   const [scroll, setScroll] = useState(false);
 
@@ -52,7 +49,7 @@ const Navbar = () => {
             Request Books
           </label>
         </li>
-        {user && user?.uid ? (
+        {userDB?.email ? (
           <>
             <li className="text-grey font-semibold dropdown dropdown-hover me-4 md:py-4">
               <Link
@@ -61,13 +58,7 @@ const Navbar = () => {
               >
                 <p className=" text-primary">
                   <img
-                    src={
-                      userDB?.photo
-                        ? userDB?.photo
-                        : user?.photoURL
-                        ? user?.photoURL
-                        : unknown
-                    }
+                    src={userDB?.image}
                     className="size-10 rounded-full"
                     alt=""
                   />

@@ -1,20 +1,19 @@
-import React, { useContext, useEffect, useState } from "react";
+/* eslint-disable no-unused-vars */
+import { useContext, useState } from "react";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 import { GoSignOut } from "react-icons/go";
 import { FaHome } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
-import { FaStar } from "react-icons/fa";
 import { FaBook } from "react-icons/fa";
 import { FaBookMedical } from "react-icons/fa";
 import { CiSquareQuestion } from "react-icons/ci";
 import { VscNewFile } from "react-icons/vsc";
 import { toast } from "sonner";
-import config from "../../config";
 import { SiBookstack } from "react-icons/si";
 
 const DashboardLayout = () => {
-  const { logOut, userDB } = useContext(AuthContext);
+  const { logOut } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -25,6 +24,7 @@ const DashboardLayout = () => {
   const handleLogOut = () => {
     const consent = window.confirm("Are you sure you want to log out?");
     if (consent) {
+      localStorage.removeItem("accessToken");
       logOut()
         .then(() => {
           toast.success("Logged out successfully");

@@ -19,25 +19,31 @@ const Hero = () => {
     navigate("/books");
   };
 
-  // useEffect(() => {
-  //   if (searchText) {
-  //     fetch(`${config.base_url}/books/search-suggestion?tag=${searchText}`)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setSuggestions(data?.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setSuggestions([]);
-  //   }
-  // }, [searchText]);
+  useEffect(() => {
+    if (searchText) {
+      // fetch(`${config.base_url}/books/search-suggestion?tag=${searchText}`)
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     setSuggestions(data?.data);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
+      setSuggestions([
+        { _id: 1, title: "A tale" },
+        { _id: 2, title: "A Book " },
+      ]);
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchText]);
   return (
     <div className="min-h-screen hero">
       <div className="w-11/12 mx-auto flex justify-center items-center flex-col min-h-screen pt-28 pb-20 text-gray-100 gap-5">
-        <h1 className="text-5xl">Welcome to University Library</h1>
-        <h1 className="text-5xl">Your all-in-one library</h1>
+        <h1 className="text-6xl font-semibold">
+          Welcome to <span className="text-primary">University Library</span>
+        </h1>
+        <h1 className="text-6xl font-semibold">Your all-in-one library</h1>
         <p>Register now for unlimited access to books and resources</p>
         <form
           onSubmit={handleExplore}
@@ -57,15 +63,15 @@ const Hero = () => {
             <p className="text-base md:text-xl text-white">Search</p>
           </button>
           {suggestions?.length ? (
-            <div className="absolute w-full top-[105%] bg-base-300 p-2 rounded-lg flex flex-col space-y-[8px]">
+            <div className="absolute w-full top-[105%] left-0 bg-base-200 p-2 rounded-lg flex flex-col space-y-[8px]">
               {suggestions?.length
                 ? suggestions.map((suggestion, i) => (
                     <button
-                      className="bg-base-100 rounded p-1 ps-2 text-start"
+                      className="bg-base-100 text-gray-600 rounded p-1 ps-2 text-start"
                       key={i}
-                      onClick={() => setSearchText(`${suggestion?.firstName}`)}
+                      onClick={() => setSearchText(`${suggestion?.title}`)}
                     >
-                      {suggestion?.firstName}
+                      {suggestion?.title}
                     </button>
                   ))
                 : ""}

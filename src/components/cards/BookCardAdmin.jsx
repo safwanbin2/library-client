@@ -3,10 +3,13 @@ import { RiStarSLine } from "react-icons/ri";
 import { CiMenuKebab } from "react-icons/ci";
 import { Link } from "react-router-dom";
 import bookPhoto from "../../assets/book.jpg";
+import { toast } from "sonner";
 
 const BookCardAdmin = ({ book }) => {
   const { _id } = book ?? {};
-
+  const handleDelete = (id) => {
+    toast.success("Deleted Successfully");
+  };
   return (
     <div className="md:space-y-2">
       <img
@@ -28,13 +31,17 @@ const BookCardAdmin = ({ book }) => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded w-52"
+              className="dropdown-content z-[1] menu p-2 shadow-lg bg-base-100 rounded w-52 space-y-1"
             >
               <li>
-                <Link className="">Edit</Link>
+                <Link to={`/dashboard/edit-book/${_id}`} className="">
+                  Edit
+                </Link>
               </li>
               <li>
-                <button className="">Delete</button>
+                <button onClick={() => handleDelete(_id)} className="">
+                  Delete
+                </button>
               </li>
             </ul>
           </div>

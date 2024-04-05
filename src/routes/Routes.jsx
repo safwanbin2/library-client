@@ -14,6 +14,7 @@ import BorrowRequests from "../pages/dashboard/borrowRequest/BorrowRequests";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import BookRequests from "../pages/dashboard/bookRequest/BookRequest";
 import BooksAdmin from "../pages/dashboard/book/BooksAdmin";
+import EditBook from "../pages/dashboard/book/EditBook";
 
 export const router = createBrowserRouter([
   {
@@ -75,6 +76,11 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/books",
         element: <BooksAdmin />,
+      },
+      {
+        path: "/dashboard/edit-book/:bookId",
+        loader: ({ params }) => params.bookId,
+        element: <EditBook />,
       },
       {
         path: "/dashboard/add-book",

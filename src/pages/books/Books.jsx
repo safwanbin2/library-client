@@ -1,59 +1,87 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
+import { useContext, useState } from "react";
+
 import { useQuery } from "@tanstack/react-query";
-import config from "../../config";
-import LoadingScreen from "../../components/LoadingScreen";
+import axios from "axios";
+
 import FilterForm from "../../components/books/FilterForm";
 import BooksList from "../../components/books/BooksList";
+import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 
 const Books = () => {
   const { filterObject } = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [books, setBooks] = useState([
-    { _id: 1 },
-    { _id: 2 },
-    { _id: 3 },
-    { _id: 4 },
-    { _id: 5 },
-  ]);
 
-  // const { data: persons, isLoading } = useQuery({
-  //   queryKey: [filterObject, filterObject?.searchTerm, currentPage],
-  //   queryFn: async () => {
-  //     const res = await fetch(
-  //       `${config.base_url}/books?searchTerm=${
-  //         filterObject?.searchTerm || ""
-  //       }&page=${currentPage}`
-  //     );
-  //     const data = await res.json();
-  //     setTotalPages(Math.ceil(data.total / data.limit));
-  //     return data.data;
-  //   },
-  // });
+  const { data: books, isLoading } = useQuery({
+    queryKey: [
+      "books",
+      currentPage,
+      filterObject.searchTerm,
+      filterObject.genre,
+      currentPage,
+    ],
+    queryFn: async () => {
+      const queryParams = {
+        page: currentPage,
+      };
 
-  useEffect(() => {
-    setCurrentPage(1); // Reset current page when search term changes
-  }, [filterObject?.searchTerm]);
+      if (filterObject.searchTerm) {
+        queryParams.searchTerm = filterObject.searchTerm;
+      }
+      if (filterObject.genre) {
+        queryParams.genre = filterObject.genre;
+      }
+
+      const queryString = new URLSearchParams(queryParams).toString();
+
+      const res = await axios.get(`/books?${queryString}`);
+
+      return res.data.data;
+    },
+  });
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
   };
 
-  // if (isLoading) {
-  //   return <LoadingScreen />;
-  // }
+  console.log({ books });
 
   return (
     <div className="mt-24 mb-10 min-h-screen w-11/12 mx-auto space-y-5">
       <FilterForm />
       <div className="min-h-[70vh]">
-        <BooksList books={books} />
+        {isLoading ? <p>Loading...</p> : <BooksList books={books?.data} />}
       </div>
 
       <div className="text-center">
         <div className="join">
-          <button
+          {books?.meta.total > 0 && (
+            <div className="flex justify-center mt-4">
+              {Array.from(
+                { length: Math.ceil(books?.meta.total / 10) },
+                (_, i) => i + 1
+              ).map((page) => (
+                <button
+                  key={page}
+                  className={`px-4 py-2 mx-2 border rounded ${
+                    currentPage === page ? "bg-blue-500 text-white" : ""
+                  }`}
+                  onClick={() => handlePageChange(page)}
+                >
+                  {page}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Books;
+
+{
+  /* <button
             className="join-item px-3 py-2 bg-base-200"
             onClick={() => handlePageChange(currentPage - 1)}
             disabled={currentPage === 1}
@@ -71,11 +99,5 @@ const Books = () => {
             disabled={currentPage === totalPages}
           >
             »
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-};
-
-export default Books;
+          </button> */
+}

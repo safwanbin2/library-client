@@ -1,46 +1,40 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
-import config from "../../config";
 
 const FilterForm = () => {
   const [searchText, setSearchText] = useState("");
-  const [genre, setGenre] = useState("");
+
   const { filterObject, setFilterObject } = useContext(AuthContext);
-  const [suggestions, setSuggestions] = useState([]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFilterObject((prev) => ({ ...prev, searchTerm: searchText, genre }));
+    setFilterObject((prev) => ({ ...prev, searchTerm: searchText }));
   };
 
-  // useEffect(() => {
-  //   if (searchText) {
-  //     fetch(`${config.base_url}/books/search-suggestion?tag=${searchText}`)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         setSuggestions(data?.data);
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     setSuggestions([]);
-  //   }
-  // }, [searchText]);
+  useEffect(() => {
+    if (!searchText) {
+      setFilterObject((prev) => ({ ...prev, searchTerm: searchText }));
+    }
+  }, [searchText]);
 
   return (
     <div className="space-y-1">
       <h2 className="font-medium text-gray-600">Filter: </h2>
       <div className="flex flex-col md:flex-row gap-2 items-start md:items-center ">
         <select
-          onChange={(e) => setGenre(e.target.value)}
+          onChange={(e) =>
+            setFilterObject((prev) => ({ ...prev, genre: e.target.value }))
+          }
           className="select select-bordered focus:outline-none rounded-full !px-3 w-6/12 md:w-2/12 shadow"
         >
           <option value="" selected>
             All
           </option>
-          <option value="action">Action</option>
-          <option value="thriller">Thriller</option>
+          <option value="Action">Action</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Epic">Epic</option>
+          <option value="Romantic">Romantic</option>
+          <option value="Fiction">Fiction</option>
         </select>
         <form
           onSubmit={handleSubmit}
@@ -49,8 +43,8 @@ const FilterForm = () => {
           <input
             onChange={(e) => setSearchText(e.target.value)}
             className=" outline-none bg-transparent rounded-full px-3 py-3 w-full"
-            type="search"
-            placeholder="Search for Profile"
+            type="text"
+            placeholder="Search for books"
             defaultValue={filterObject?.searchTerm}
           />
           <button
@@ -60,7 +54,7 @@ const FilterForm = () => {
             {/* <img src={searchBtn} alt="" /> */}
             <p className="text-base text-white">Search</p>
           </button>
-          {suggestions?.length ? (
+          {/* {suggestions?.length ? (
             <div className="absolute w-full top-[105%] bg-base-300 p-2 rounded-lg flex flex-col space-y-[8px]">
               {suggestions?.length
                 ? suggestions.map((suggestion, i) => (
@@ -76,7 +70,7 @@ const FilterForm = () => {
             </div>
           ) : (
             ""
-          )}
+          )} */}
         </form>
       </div>
     </div>

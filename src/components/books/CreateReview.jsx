@@ -1,72 +1,49 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 import { toast } from "sonner";
-import config from "../../config";
-import LoadingScreen from "../LoadingScreen";
-
-const CreateReview = ({ book, setRefetchReviews, refetch }) => {
+import axios from "axios";
+const CreateReview = ({ book, refetch }) => {
   const { _id } = book ?? {};
-  const { userDB, user } = useContext(AuthContext);
+  const { userDB } = useContext(AuthContext);
   const [rating, setRating] = useState(5);
   const [loading, setLoading] = useState(false);
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const handleCreatePost = (data) => {
-    // const review = {
-    //   reviewerId: userDB?._id,
-    //   reviewerEmail: userDB?.email,
-    //   reviewerPhoto: userDB?.photo || user?.photoURL,
-    //   reviewerName: `${userDB?.firstName ? userDB?.firstName : ""} ${
-    //     userDB?.lastName ? userDB?.lastName : ""
-    //   }`,
-    //   receiverId: _id,
-    //   receiverEmail: email,
-    //   rating,
-    //   feedback: data?.feedback,
-    // };
-    // if (!rating) {
-    //   return toast.error("Give Star");
-    // }
-    // if (!data?.feedback) {
-    //   return toast.error("Give Feedback");
-    // }
-    // setLoading(true);
-    // fetch(`${config.base_url}/reviews`, {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-type": "application/json",
-    //   },
-    //   body: JSON.stringify(review),
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     setLoading(false);
-    //     if (data?.success) {
-    //       setRefetchReviews((prev) => !prev);
-    //       refetch();
-    //       return toast.success(data.message);
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     toast.error(err.message || "Something went wrong!");
-    //   });
-  };
+  const handleCreatePost = async (data) => {
+    const review = {
+      name: userDB?.name,
+      image: userDB?.image,
+      rating,
+      comment: data?.feedback,
+    };
 
-  if (loading) {
-    return <LoadingScreen />;
-  }
+    if (!data?.feedback) {
+      return toast.error("Give Feedback");
+    }
+    setLoading(true);
+    try {
+      const res = await axios.patch(`/books/review/${_id}`, review);
+
+      setLoading(false);
+
+      if (res?.data?.statusCode === 200) {
+        refetch();
+        reset();
+        toast.success(res?.data?.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <form onSubmit={handleSubmit(handleCreatePost)}>
-      {/* <label className="label text-red-400 text-xs ps-0">
-        <span className="">Choose Stars</span>
-      </label> */}
       <div
         className={`${
           errors.comment ? "border-red-400" : "border-gray-200"
@@ -135,7 +112,7 @@ const CreateReview = ({ book, setRefetchReviews, refetch }) => {
         </div>
       </div>
       <button type="submit" className="p-btn rounded-full">
-        Review
+        {loading ? "Reviewing..." : "Review"}
       </button>
     </form>
   );

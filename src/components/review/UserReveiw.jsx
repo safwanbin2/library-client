@@ -1,10 +1,4 @@
-import React from "react";
-import { Link } from "react-router-dom";
-import unknown from "../../assets/unknown.jpg";
-
 const UserReview = ({ review }) => {
-  const { _id } = review ?? {};
-
   const showStars = (amount) => {
     let arr = [];
     for (let i = 1; i <= parseInt(amount); i++) {
@@ -27,24 +21,20 @@ const UserReview = ({ review }) => {
     <figure className="max-w-screen-md">
       <div className="flex items-center mb-2 text-yellow-300">
         {/* {showStars(rating).map((star) => star)} */}
-        {showStars(5).map((star) => star)}
+        {showStars(review?.rating).map((star) => star)}
       </div>
       <blockquote>
         {/* <p className="text-lg font-medium text-gray-200">{feedback}</p> */}
-        <p className="text-lg font-medium text-gray-600">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Mollitia
-          commodi aliquid temporibus voluptate itaque maxime dolores
-          consequatur, ab doloremque! Laborum.
-        </p>
+        <p className="text-lg font-medium text-gray-600">{review?.comment}</p>
       </blockquote>
       <figcaption className="flex items-center mt-2 space-x-3 rtl:space-x-reverse">
         <img
           className="size-8 rounded-full"
-          // src={reviewerPhoto ? reviewerPhoto : unknown}
+          src={review?.image}
           alt="profile picture"
         />
         <div className="flex items-center divide-x-2 rtl:divide-x-reverse divide-gray-300 dark:divide-gray-700">
-          <p className="pe-3 font-medium">Test person</p>
+          <p className="pe-3 font-medium">{review?.name}</p>
         </div>
       </figcaption>
     </figure>

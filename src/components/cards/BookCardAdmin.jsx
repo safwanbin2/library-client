@@ -1,19 +1,27 @@
-import React from "react";
-import { RiStarSLine } from "react-icons/ri";
 import { CiMenuKebab } from "react-icons/ci";
 import { Link } from "react-router-dom";
-import bookPhoto from "../../assets/book.jpg";
+import axios from "axios";
 import { toast } from "sonner";
 
-const BookCardAdmin = ({ book }) => {
+const BookCardAdmin = ({ book, refetch }) => {
   const { _id } = book ?? {};
-  const handleDelete = (id) => {
-    toast.success("Deleted Successfully");
+  const handleDelete = async (id) => {
+    try {
+      const res = await axios.delete(`/books/delete/${id}`);
+      console.log(res?.data?.message);
+      if (res?.data?.statusCode === 200) {
+        refetch();
+        toast.success(res?.data?.message || "Deleted Successfully");
+      }
+    } catch (error) {
+      console.log({ error });
+      toast.error(error.response.data.message || "Something went wrong!");
+    }
   };
   return (
     <div className="md:space-y-2">
       <img
-        src={bookPhoto}
+        src={book?.image}
         className="rounded-t-xl w-full h-36 md:h-44 lg:h-64"
         alt=""
       />
@@ -23,7 +31,7 @@ const BookCardAdmin = ({ book }) => {
             to={`/books/${_id}`}
             className="text-sm md:text-base font-semibold link"
           >
-            Test Book
+            {book?.title}
           </Link>
           <div className="dropdown dropdown-bottom dropdown-end">
             <div tabIndex={0} role="button" className="">
@@ -47,9 +55,7 @@ const BookCardAdmin = ({ book }) => {
           </div>
         </div>
         <p className="text-sm md:text-base text-gray-500">
-          {/* {bio?.length > 40 ? `${bio.slice(0, 40)}...` : bio} */}
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sapiente
-          dolorem
+          {book?.description}
         </p>
       </div>
     </div>

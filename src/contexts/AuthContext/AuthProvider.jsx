@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
-      setIsLoading(false);
+      // setIsLoading(false);
     });
     return () => {
       return () => unsubscribe();
@@ -92,7 +92,7 @@ const AuthProvider = ({ children }) => {
     };
 
     getProfile();
-  }, [user, user?.email, token, userRefetch]);
+  }, [token, userRefetch]);
 
   // Getting the user from mongodb database
   // useEffect(() => {

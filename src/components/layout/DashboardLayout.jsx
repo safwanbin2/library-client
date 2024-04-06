@@ -99,19 +99,21 @@ const DashboardLayout = () => {
           </NavLink>
         </li>
       )}
-      <li>
-        <NavLink
-          to="/dashboard/add-book"
-          className={({ isActive, isPending }) =>
-            `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-              isActive ? "bg-primary text-white" : ""
-            }`
-          }
-        >
-          <FaBookMedical className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-          <span className="flex-1 ml-3 whitespace-nowrap">Add Book</span>
-        </NavLink>
-      </li>
+      {userDB?.role === "librarian" && (
+        <li>
+          <NavLink
+            to="/dashboard/add-book"
+            className={({ isActive, isPending }) =>
+              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+                isActive ? "bg-primary text-white" : ""
+              }`
+            }
+          >
+            <FaBookMedical className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+            <span className="flex-1 ml-3 whitespace-nowrap">Add Book</span>
+          </NavLink>
+        </li>
+      )}
       {userDB?.role === "user" && (
         <li>
           <NavLink
@@ -129,21 +131,23 @@ const DashboardLayout = () => {
           </NavLink>
         </li>
       )}
-      <li>
-        <NavLink
-          to="/dashboard/book-requests"
-          className={({ isActive, isPending }) =>
-            `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-              isActive ? "bg-primary text-white" : ""
-            }`
-          }
-        >
-          <VscNewFile className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-          <span className="flex-1 ml-3 whitespace-nowrap">
-            New Book Requests
-          </span>
-        </NavLink>
-      </li>
+      {userDB?.role === "librarian" && (
+        <li>
+          <NavLink
+            to="/dashboard/book-requests"
+            className={({ isActive, isPending }) =>
+              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+                isActive ? "bg-primary text-white" : ""
+              }`
+            }
+          >
+            <VscNewFile className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+            <span className="flex-1 ml-3 whitespace-nowrap">
+              New Book Requests
+            </span>
+          </NavLink>
+        </li>
+      )}
       <li>
         <button
           onClick={handleLogOut}

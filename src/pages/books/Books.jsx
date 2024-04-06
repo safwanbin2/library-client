@@ -43,8 +43,6 @@ const Books = () => {
     setCurrentPage(page);
   };
 
-  console.log({ books });
-
   return (
     <div className="mt-24 mb-10 min-h-screen w-11/12 mx-auto space-y-5">
       <FilterForm />

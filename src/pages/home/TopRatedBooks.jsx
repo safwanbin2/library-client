@@ -1,26 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useState } from "react";
 import BookCard from "../../components/cards/BookCard";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 const TopRatedBooks = () => {
-  // const { data: books, isLoading } = useQuery({
-  //   queryKey: [],
-  //   queryFn: async () => {
-  //     const res = await fetch(`${config.base_url}/users`);
-  //     const data = await res.json();
-  //     return data.data;
-  //   },
-  // });
+  const { data: books, isLoading } = useQuery({
+    queryKey: ["books"],
+    queryFn: async () => {
+      const res = await axios.get(`/books`);
 
-  // if (isLoading) {
-  //   return <LoadingScreen />;
-  // }
-  const [books, setBooks] = useState([
-    { _id: 1, title: "TAle" },
-    { _id: 2, title: "Bale" },
-    { _id: 3, title: "Cale" },
-  ]);
+      return res.data.data.data;
+    },
+  });
+
   return (
     <div className="my-16 space-y-10">
       <div className="text-center">

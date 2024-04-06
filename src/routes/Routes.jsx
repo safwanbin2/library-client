@@ -17,6 +17,7 @@ import BooksAdmin from "../pages/dashboard/book/BooksAdmin";
 import EditBook from "../pages/dashboard/book/EditBook";
 import LibrarianRoute from "./LibrarianRotue";
 import UserPrivateRoute from "./UserPrivateRoute";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -62,59 +63,79 @@ export const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <MyProfile />,
+        element: (
+          <PrivateRoute>
+            <MyProfile />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/my-profile",
-        element: <MyProfile />,
+        element: (
+          <PrivateRoute>
+            <MyProfile />,
+          </PrivateRoute>
+        ),
       },
       {
         path: "/dashboard/my-books",
         element: (
-          <UserPrivateRoute>
-            <MyBook />,
-          </UserPrivateRoute>
+          <PrivateRoute>
+            <UserPrivateRoute>
+              <MyBook />,
+            </UserPrivateRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/borrow-requests",
         element: (
-          <UserPrivateRoute>
-            <BorrowRequests />,
-          </UserPrivateRoute>
+          <PrivateRoute>
+            <UserPrivateRoute>
+              <BorrowRequests />,
+            </UserPrivateRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/books",
         element: (
-          <LibrarianRoute>
-            <BooksAdmin />
-          </LibrarianRoute>
+          <PrivateRoute>
+            <LibrarianRoute>
+              <BooksAdmin />
+            </LibrarianRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/edit-book/:bookId",
         loader: ({ params }) => params.bookId,
         element: (
-          <LibrarianRoute>
-            <EditBook />
-          </LibrarianRoute>
+          <PrivateRoute>
+            <LibrarianRoute>
+              <EditBook />
+            </LibrarianRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/add-book",
         element: (
-          <LibrarianRoute>
-            <AddBook />
-          </LibrarianRoute>
+          <PrivateRoute>
+            <LibrarianRoute>
+              <AddBook />
+            </LibrarianRoute>
+          </PrivateRoute>
         ),
       },
       {
         path: "/dashboard/Book-requests",
         element: (
-          <LibrarianRoute>
-            <BookRequests />
-          </LibrarianRoute>
+          <PrivateRoute>
+            <LibrarianRoute>
+              <BookRequests />
+            </LibrarianRoute>
+          </PrivateRoute>
         ),
       },
     ],

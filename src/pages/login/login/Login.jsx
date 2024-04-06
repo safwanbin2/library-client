@@ -88,66 +88,6 @@ const Login = () => {
     }
   };
 
-  // const handleLogInWithGoogle = () => {
-  //   logInWithGoogle()
-  //     .then((result) => {
-  //       const user = result.user;
-  //       if (user.uid) {
-  //         setIsLoading(true);
-  //         let newUser = {
-  //           email: user?.email,
-  //           firstName: user?.displayName,
-  //           lastName: null,
-  //           photo: user?.photoURL,
-  //         };
-
-  //         fetch(`${config.base_url}/users`, {
-  //           method: "POST",
-  //           headers: {
-  //             "content-type": "application/json",
-  //           },
-  //           body: JSON.stringify(newUser),
-  //         })
-  //           .then((res) => res.json())
-  //           .then((data) => {
-  //             setIsLoading(false);
-  //             toast.success(`Logged in`);
-  //             return navigate("/");
-  //           });
-
-  //         setIsLoading(false);
-  //         toast.success(`Logged in`);
-  //         navigate("/");
-  //         console.log(user);
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setIsLoading(false);
-  //       if (err.message) {
-  //         return toast.error(err.message);
-  //       }
-  //       toast.error("Error Occured");
-  //     });
-  // };
-
-  // const handleLogin = (data) => {
-  //   logInWithEmail(data?.email, data?.password)
-  //     .then((result) => {
-  //       const user = result.user;
-  //       toast.success(`Logged in`);
-  //       return navigate("/");
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //       setIsLoading(false);
-  //       if (err.message) {
-  //         return toast.error(err.message);
-  //       }
-  //       toast.error("Failed to log In, Try again");
-  //     });
-  // };
-
   if (isLoading) {
     return <LoadingScreen />;
   }

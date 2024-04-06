@@ -1,11 +1,15 @@
-import React, { useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
 import UploadBookImage from "../../../components/dashboard/addBook/UploadBookImage";
-
+import axios from "axios";
+import { toast } from "sonner";
 const AddBook = () => {
-  const { user, userDB, setRefetchUserDB } = useContext(AuthContext);
+  const { userDB } = useContext(AuthContext);
+  const [imageFile, setImageFile] = useState(null);
+  const [imagePreview, setImagePreview] = useState(null);
   const [loading, setLoading] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -13,8 +17,45 @@ const AddBook = () => {
     formState: { errors },
   } = useForm();
 
-  const handleAddBook = (data) => {
-    reset();
+  const handleAddBook = async (data) => {
+    setLoading(true);
+
+    try {
+      const formData = new FormData();
+
+      for (const key in data) {
+        if (Object.hasOwnProperty.call(data, key)) {
+          formData.append(key, data[key]);
+        }
+      }
+
+      formData.append("image", imageFile);
+      formData.append("user", userDB?._id);
+
+      const promise = await axios.post(`/books/create`, formData);
+      if (promise.status === 200) {
+        toast.success(`New book added!`, {
+          id: "book",
+          duration: 2000,
+          position: "top-right",
+        });
+        reset();
+        setImageFile(null);
+        setImagePreview(null);
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+      return toast.error(
+        error.response.data.message || `Failed to add new book`,
+        {
+          id: "book",
+          duration: 2000,
+          position: "top-right",
+        }
+      );
+    }
   };
 
   return (
@@ -111,8 +152,11 @@ const AddBook = () => {
               })}
               className="border rounded-full focus:outline-none p-2  w-full"
             >
-              <option value="action">Action</option>
-              <option value="thriller">Thriller</option>
+              <option value="Action">Action</option>
+              <option value="Thriller">Thriller</option>
+              <option value="Epic">Epic</option>
+              <option value="Romantic">Romantic</option>
+              <option value="Fiction">Fiction</option>
             </select>
             {errors.genre && (
               <label className="label text-red-400 text-xs ps-0">
@@ -168,16 +212,33 @@ const AddBook = () => {
             )}
           </div>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 items-center">
           <div className="form-control">
             <label className="label ps-0">
               <span className="">Image</span>
             </label>
-            <UploadBookImage />
+            <UploadBookImage
+              imageFile={imageFile}
+              setImageFile={setImageFile}
+              setImagePreview={setImagePreview}
+            />
           </div>
+          {imagePreview && (
+            <div>
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="object-cover w-32 h-w-32"
+              />
+            </div>
+          )}
         </div>
-        <button type="submit" className="p-btn rounded-full !py-2 !px-4">
-          Add Book
+        <button
+          disabled={loading}
+          type="submit"
+          className="p-btn rounded-full !py-2 !px-4"
+        >
+          {loading ? "Adding.." : "Add Book"}
         </button>
       </form>
     </div>

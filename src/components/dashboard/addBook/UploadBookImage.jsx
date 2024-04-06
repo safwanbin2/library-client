@@ -1,47 +1,15 @@
-import { useContext, useState } from "react";
-import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
-import { FaCamera } from "react-icons/fa";
-import unknown from "../../../assets/unknown.jpg";
-import config from "../../../config";
-import { toast } from "sonner";
-import LoadingScreen from "../../LoadingScreen";
+/* eslint-disable react/prop-types */
+const UploadBookImage = ({ setImageFile, setImagePreview }) => {
+  const handleFileChange = (event) => {
+    const file = event.target.files[0];
+    setImageFile(file);
 
-const UploadBookImage = () => {
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [loading, setloading] = useState(false);
-
-  const { user, userDB } = useContext(AuthContext);
-
-  const handleImageChange = async (e) => {
-    // const file = e.target.files[0];
-    // if (file) {
-    //   setloading(true);
-    //   const formdata = new FormData();
-    //   formdata.append("image", file);
-    //   console.log(formdata);
-    //   fetch(`${config.base_url}/users/upload?email=${user?.email}`, {
-    //     method: "POST",
-    //     body: formdata,
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       console.log(data);
-    //       if (!data?.success) {
-    //         setloading(false);
-    //         return toast.error(data.message);
-    //       }
-    //       setSelectedImage(data.data.photo);
-    //       toast.success("Uploaded Successfully");
-    //       setloading(false);
-    //     })
-    //     .catch((err) => {
-    //       setloading(false);
-    //       console.log(err);
-    //       toast.error("Something went wrong");
-    //     });
-    // }
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setImagePreview(reader.result);
+    };
+    reader.readAsDataURL(file);
   };
-
   return (
     <>
       <div className="flex items-center justify-center w-full">
@@ -59,9 +27,9 @@ const UploadBookImage = () => {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
               />
             </svg>
@@ -70,7 +38,13 @@ const UploadBookImage = () => {
               drop
             </p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" />
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            name="image"
+            onChange={handleFileChange}
+          />
         </label>
       </div>
     </>

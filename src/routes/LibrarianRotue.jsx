@@ -6,7 +6,7 @@ import { AuthContext } from "../contexts/AuthContext/AuthProvider";
 import LoadingScreen from "../components/LoadingScreen";
 import { toast } from "sonner";
 
-const PrivateRoute = ({ children }) => {
+const LibrarianRoute = ({ children }) => {
   const { userDB, isLoading } = useContext(AuthContext);
   const location = useLocation();
 
@@ -14,13 +14,15 @@ const PrivateRoute = ({ children }) => {
     return <LoadingScreen />;
   }
 
-  console.log({ isLoading, userDB });
+  // console.log({ isLoading, userDB });
 
-  if (userDB?.email) {
+  if (userDB?.role === "librarian") {
     return children;
   }
   toast.info("Login required for access", { id: "login", duration: 8000 });
-  return <Navigate to="/login" state={{ from: location }} replace></Navigate>;
+  return (
+    <Navigate to="/dashboard" state={{ from: location }} replace></Navigate>
+  );
 };
 
-export default PrivateRoute;
+export default LibrarianRoute;

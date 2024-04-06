@@ -12,11 +12,8 @@ import { VscNewFile } from "react-icons/vsc";
 import { toast } from "sonner";
 import { SiBookstack } from "react-icons/si";
 
-const DashboardLayout = () => {
-  const { logOut, userDB } = useContext(AuthContext);
-
-  console.log(userDB?.role);
-
+const LibrarianDashboardLayout = () => {
+  const { logOut } = useContext(AuthContext);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -69,36 +66,20 @@ const DashboardLayout = () => {
           <span className="flex-1 ml-3 whitespace-nowrap">Profile</span>
         </NavLink>
       </li>
-      {userDB?.role === "user" && (
-        <li>
-          <NavLink
-            to="/dashboard/my-books"
-            className={({ isActive, isPending }) =>
-              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-                isActive ? "bg-primary text-white" : ""
-              }`
-            }
-          >
-            <FaBook className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-            <span className="flex-1 ml-3 whitespace-nowrap">My Borrowings</span>
-          </NavLink>
-        </li>
-      )}
-      {userDB?.role === "librarian" && (
-        <li>
-          <NavLink
-            to="/dashboard/books"
-            className={({ isActive, isPending }) =>
-              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-                isActive ? "bg-primary text-white" : ""
-              }`
-            }
-          >
-            <SiBookstack className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-            <span className="flex-1 ml-3 whitespace-nowrap">Books</span>
-          </NavLink>
-        </li>
-      )}
+
+      <li>
+        <NavLink
+          to="/dashboard/books"
+          className={({ isActive, isPending }) =>
+            `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+              isActive ? "bg-primary text-white" : ""
+            }`
+          }
+        >
+          <SiBookstack className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+          <span className="flex-1 ml-3 whitespace-nowrap">Books</span>
+        </NavLink>
+      </li>
       <li>
         <NavLink
           to="/dashboard/add-book"
@@ -112,23 +93,7 @@ const DashboardLayout = () => {
           <span className="flex-1 ml-3 whitespace-nowrap">Add Book</span>
         </NavLink>
       </li>
-      {userDB?.role === "user" && (
-        <li>
-          <NavLink
-            to="/dashboard/borrow-requests"
-            className={({ isActive, isPending }) =>
-              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-                isActive ? "bg-primary text-white" : ""
-              }`
-            }
-          >
-            <CiSquareQuestion className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-            <span className="flex-1 ml-3 whitespace-nowrap">
-              Borrow Requests
-            </span>
-          </NavLink>
-        </li>
-      )}
+
       <li>
         <NavLink
           to="/dashboard/book-requests"
@@ -231,4 +196,4 @@ const DashboardLayout = () => {
   );
 };
 
-export default DashboardLayout;
+export default LibrarianDashboardLayout;

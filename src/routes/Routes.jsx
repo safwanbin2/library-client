@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import MainLayout from "../components/layout/MainLayout";
 import DashboardLayout from "../components/layout/DashboardLayout";
-import PrivateRoute from "./PrivateRoute";
+
 import PageNotFound from "../components/PageNotFound";
 import Home from "../pages/home/Home";
 import Login from "../pages/login/login/Login";
@@ -15,6 +15,8 @@ import AddBook from "../pages/dashboard/addBook/AddBook";
 import BookRequests from "../pages/dashboard/bookRequest/BookRequest";
 import BooksAdmin from "../pages/dashboard/book/BooksAdmin";
 import EditBook from "../pages/dashboard/book/EditBook";
+import LibrarianRoute from "./LibrarianRotue";
+import UserPrivateRoute from "./UserPrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +56,7 @@ export const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
+
     element: <DashboardLayout />,
     errorElement: <PageNotFound />,
     children: [
@@ -67,28 +70,52 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/my-books",
-        element: <MyBook />,
+        element: (
+          <UserPrivateRoute>
+            <MyBook />,
+          </UserPrivateRoute>
+        ),
       },
       {
         path: "/dashboard/borrow-requests",
-        element: <BorrowRequests />,
+        element: (
+          <UserPrivateRoute>
+            <BorrowRequests />,
+          </UserPrivateRoute>
+        ),
       },
       {
         path: "/dashboard/books",
-        element: <BooksAdmin />,
+        element: (
+          <LibrarianRoute>
+            <BooksAdmin />
+          </LibrarianRoute>
+        ),
       },
       {
         path: "/dashboard/edit-book/:bookId",
         loader: ({ params }) => params.bookId,
-        element: <EditBook />,
+        element: (
+          <LibrarianRoute>
+            <EditBook />
+          </LibrarianRoute>
+        ),
       },
       {
         path: "/dashboard/add-book",
-        element: <AddBook />,
+        element: (
+          <LibrarianRoute>
+            <AddBook />
+          </LibrarianRoute>
+        ),
       },
       {
         path: "/dashboard/Book-requests",
-        element: <BookRequests />,
+        element: (
+          <LibrarianRoute>
+            <BookRequests />
+          </LibrarianRoute>
+        ),
       },
     ],
   },

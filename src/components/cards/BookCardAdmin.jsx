@@ -19,7 +19,7 @@ const BookCardAdmin = ({ book, refetch }) => {
     }
   };
   return (
-    <div className="md:space-y-2">
+    <div className="md:space-y-2 w-[250px] md:w-[300px]">
       <img
         src={book?.image}
         className="rounded-t-xl w-full h-36 md:h-44 lg:h-64"
@@ -55,7 +55,7 @@ const BookCardAdmin = ({ book, refetch }) => {
           </div>
         </div>
         <p className="text-sm md:text-base text-gray-500">
-          {book?.description}
+          {book?.description.slice(0, 100)}..
         </p>
       </div>
     </div>

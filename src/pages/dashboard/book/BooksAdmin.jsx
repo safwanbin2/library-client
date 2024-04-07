@@ -45,7 +45,7 @@ const BooksAdmin = () => {
         <option value="Romantic">Romantic</option>
         <option value="Fiction">Fiction</option>
       </select>
-      <div className="grid  grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-4 md:gap-8">
+      <div className="flex justify-center md:justify-start flex-wrap gap-6">
         {books?.length
           ? books.map((book, i) => (
               <BookCardAdmin refetch={refetch} key={i} book={book} />

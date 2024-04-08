@@ -35,20 +35,16 @@ const Navbar = () => {
             <p className="">Books</p>
           </Link>
         </li>
-        <li className="text-gray-600 text-base dropdown dropdown-hover me-4 md:py-4 hover:text-primary transition-all duration-300 ">
-          {/* <Link
-            to="/request-book"
-            className="flex flex-col justify-center items-center gap-[2px]"
-          >
-            <p className="">Request Books</p>
-          </Link> */}
-          <label
-            htmlFor="request_book_modal"
-            className="flex flex-col justify-center items-center gap-[2px] cursor-pointer"
-          >
-            Request Books
-          </label>
-        </li>
+        {userDB?.role === "user" && (
+          <li className="text-gray-600 text-base dropdown dropdown-hover me-4 md:py-4 hover:text-primary transition-all duration-300 ">
+            <label
+              htmlFor="request_book_modal"
+              className="flex flex-col justify-center items-center gap-[2px] cursor-pointer"
+            >
+              Request Books
+            </label>
+          </li>
+        )}
         {userDB?.email ? (
           <>
             <li className="text-grey font-semibold dropdown dropdown-hover me-4 md:py-4">

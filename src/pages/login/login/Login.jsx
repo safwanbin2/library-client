@@ -42,7 +42,7 @@ const Login = () => {
             toast.success(`Logged in`, {
               id: "login",
               duration: 2000,
-              position: "top-right",
+              position: "bottom-right",
             });
             navigate("/");
             setLoading(false);
@@ -54,7 +54,7 @@ const Login = () => {
         return toast.error(error.response.data.message || `Log in failed`, {
           id: "login",
           duration: 2000,
-          position: "top-right",
+          position: "bottom-right",
         });
       }
     }

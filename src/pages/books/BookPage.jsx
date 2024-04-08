@@ -15,8 +15,6 @@ const BookPage = () => {
     },
   });
 
-  console.log({ book });
-
   // if (isLoading) {
   //   return <LoadingScreen />;
   // }

@@ -21,7 +21,6 @@ const AddBook = () => {
   } = useForm();
 
   const handleAddBook = async (data) => {
-    1;
     setLoading(true);
     try {
       const formData = new FormData();
@@ -87,7 +86,7 @@ const AddBook = () => {
           "https://www.googleapis.com/books/v1/volumes",
           {
             params: {
-              q: searchValue,
+              q: "Comedy",
               key: "AIzaSyBSK3Pnsh-wvplEf7bac88yxhwL7EEPORM",
               maxResults: 9,
             },
@@ -102,6 +101,12 @@ const AddBook = () => {
       setData([]);
     }
   };
+
+  useEffect(() => {
+    fetchData("react");
+  }, []);
+
+  console.log({ bookData });
 
   const debouncedFetchData = debounce(fetchData, 500);
 

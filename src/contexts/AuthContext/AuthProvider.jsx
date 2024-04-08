@@ -19,8 +19,8 @@ const googleProvider = new GoogleAuthProvider();
 
 export const AuthContext = createContext();
 
-axios.defaults.baseURL = "https://book-management-backend-pi.vercel.app/api/v1";
-// axios.defaults.baseURL = "http://localhost:5000/api/v1";
+// axios.defaults.baseURL = "https://book-management-backend-pi.vercel.app/api/v1";
+axios.defaults.baseURL = "http://localhost:5000/api/v1";
 
 const AuthProvider = ({ children }) => {
   // states for holding user info

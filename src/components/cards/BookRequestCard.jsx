@@ -1,24 +1,71 @@
-import React from "react";
-import book from "../../assets/book.jpg";
-import { Link } from "react-router-dom";
 import { MdOutlineCancel } from "react-icons/md";
 import { TiTickOutline } from "react-icons/ti";
 import { toast } from "sonner";
+import moment from "moment";
+import axios from "axios";
 
-const BookRequestCard = ({ request }) => {
+const BookRequestCard = ({ request, refetch }) => {
   const { _id } = request ?? {};
 
-  const handleCancel = (id) => {
-    const consent = window.confirm("Cancel the borrow request?");
+  console.log({ request });
+
+  const handleCancel = async () => {
+    const consent = window.confirm("Cancel request?");
     if (consent) {
-      return toast.success("Rejected");
+      try {
+        const promise = await axios.patch(`/book-request/update/${_id}`, {
+          status: "cancelled",
+        });
+        if (promise.status === 200) {
+          refetch();
+          toast.success(`Request Cancelled!`, {
+            id: "book",
+            duration: 2000,
+            position: "top-right",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+
+        return toast.error(
+          error.response.data.message || `Something went wrong!`,
+          {
+            id: "book",
+            duration: 2000,
+            position: "top-right",
+          }
+        );
+      }
     }
   };
 
-  const handleApprove = (id) => {
-    const consent = window.confirm("Approve the borrow request?");
+  const handleApprove = async () => {
+    const consent = window.confirm("Approve request?");
     if (consent) {
-      return toast.success("Approved");
+      try {
+        const promise = await axios.patch(`/book-request/update/${_id}`, {
+          status: "approved",
+        });
+        if (promise.status === 200) {
+          refetch();
+          toast.success(`Request Approved!`, {
+            id: "book",
+            duration: 2000,
+            position: "top-right",
+          });
+        }
+      } catch (error) {
+        console.log(error);
+
+        return toast.error(
+          error.response.data.message || `Something went wrong!`,
+          {
+            id: "book",
+            duration: 2000,
+            position: "top-right",
+          }
+        );
+      }
     }
   };
 
@@ -29,43 +76,42 @@ const BookRequestCard = ({ request }) => {
           <div>
             <h2 className="">
               By:
-              <span className="text-sm md:text-base font-semibold">Name</span>
+              <span className="text-sm md:text-base font-semibold">
+                {request?.author}
+              </span>
             </h2>
             <h2 className="">
               Email:
-              <span className="font-semibold">example@email.com</span>
+              <span className="text-sm md:text-base font-semibold">
+                {request?.user?.email}
+              </span>
             </h2>
           </div>
         </div>
         <div>
           <h2 className="">
-            Book:
-            <Link
-              to={`/books/3`}
-              className="text-sm md:text-base font-semibold link"
-            >
-              Name
-            </Link>
+            Book Name:
+            <span className="text-sm md:text-base font-semibold link">
+              {request?.title}
+            </span>
           </h2>
           <h2 className="">
-            Details:
+            Description:
             <span className="text-sm md:text-base ">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores harum minima suscipit fugiat repellat facere
-              repellendus est ut exercitationem voluptatum!
+              {request?.description}
             </span>
           </h2>
           <div>
             <h2>
               status:{" "}
               <span className="text-sm md:text-base font-semibold">
-                Pending
+                {request?.status}
               </span>
             </h2>
             <h2>
               Requested at:{" "}
               <span className="text-sm md:text-base font-semibold">
-                3rd May
+                {moment(request?.createdAt).format("Do MMMM")}
               </span>
             </h2>
           </div>

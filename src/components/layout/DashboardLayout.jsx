@@ -11,6 +11,7 @@ import { CiSquareQuestion } from "react-icons/ci";
 import { VscNewFile } from "react-icons/vsc";
 import { toast } from "sonner";
 import { SiBookstack } from "react-icons/si";
+import { BiBookReader } from "react-icons/bi";
 
 const DashboardLayout = () => {
   const { logOut, userDB } = useContext(AuthContext);
@@ -72,7 +73,7 @@ const DashboardLayout = () => {
       {userDB?.role === "user" && (
         <li>
           <NavLink
-            to="/dashboard/my-books"
+            to="/dashboard/my-borrowings"
             className={({ isActive, isPending }) =>
               `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
                 isActive ? "bg-primary text-white" : ""
@@ -114,39 +115,40 @@ const DashboardLayout = () => {
           </NavLink>
         </li>
       )}
-      {userDB?.role === "user" && (
-        <li>
-          <NavLink
-            to="/dashboard/borrow-requests"
-            className={({ isActive, isPending }) =>
-              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-                isActive ? "bg-primary text-white" : ""
-              }`
-            }
-          >
-            <CiSquareQuestion className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-            <span className="flex-1 ml-3 whitespace-nowrap">
-              Borrow Requests
-            </span>
-          </NavLink>
-        </li>
-      )}
+
       {userDB?.role === "librarian" && (
-        <li>
-          <NavLink
-            to="/dashboard/book-requests"
-            className={({ isActive, isPending }) =>
-              `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
-                isActive ? "bg-primary text-white" : ""
-              }`
-            }
-          >
-            <VscNewFile className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
-            <span className="flex-1 ml-3 whitespace-nowrap">
-              New Book Requests
-            </span>
-          </NavLink>
-        </li>
+        <>
+          <li>
+            <NavLink
+              to="/dashboard/borrow-requests"
+              className={({ isActive, isPending }) =>
+                `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+                  isActive ? "bg-primary text-white" : ""
+                }`
+              }
+            >
+              <BiBookReader className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+              <span className="flex-1 ml-3 whitespace-nowrap">
+                Borrow Requests
+              </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/book-requests"
+              className={({ isActive, isPending }) =>
+                `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+                  isActive ? "bg-primary text-white" : ""
+                }`
+              }
+            >
+              <VscNewFile className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+              <span className="flex-1 ml-3 whitespace-nowrap">
+                New Book Requests
+              </span>
+            </NavLink>
+          </li>
+        </>
       )}
       <li>
         <button
@@ -168,7 +170,7 @@ const DashboardLayout = () => {
               className="text-primary text-xl md:text-2xl uppercase font-bold"
               to="/"
             >
-              <h2 className="text-primary">Rating</h2>
+              <h2 className="text-primary">Library</h2>
               {/* <img className='h-[32px]' src={m} alt="" /> */}
             </Link>
             <div className="flex md:hidden items-center justify-start">

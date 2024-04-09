@@ -41,8 +41,6 @@ const Login = () => {
           setTimeout(() => {
             toast.success(`Logged in`, {
               id: "login",
-              duration: 2000,
-              position: "bottom-right",
             });
             navigate("/");
             setLoading(false);
@@ -53,8 +51,6 @@ const Login = () => {
         setLoading(false);
         return toast.error(error.response.data.message || `Log in failed`, {
           id: "login",
-          duration: 2000,
-          position: "bottom-right",
         });
       }
     }

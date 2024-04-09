@@ -9,7 +9,7 @@ import Register from "../pages/login/register/Register";
 import Books from "../pages/books/Books";
 import BookPage from "../pages/books/BookPage";
 import MyProfile from "../pages/dashboard/profile/MyProfile";
-import MyBook from "../pages/dashboard/myBook/MyBook";
+
 import BorrowRequests from "../pages/dashboard/borrowRequest/BorrowRequests";
 import AddBook from "../pages/dashboard/addBook/AddBook";
 import BookRequests from "../pages/dashboard/bookRequest/BookRequest";
@@ -18,6 +18,7 @@ import EditBook from "../pages/dashboard/book/EditBook";
 import LibrarianRoute from "./LibrarianRotue";
 import UserPrivateRoute from "./UserPrivateRoute";
 import PrivateRoute from "./PrivateRoute";
+import MyBorrowings from "../pages/dashboard/myBorrowings/MyBorrowings";
 
 export const router = createBrowserRouter([
   {
@@ -78,11 +79,11 @@ export const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/my-books",
+        path: "/dashboard/my-borrowings",
         element: (
           <PrivateRoute>
             <UserPrivateRoute>
-              <MyBook />,
+              <MyBorrowings />
             </UserPrivateRoute>
           </PrivateRoute>
         ),
@@ -91,9 +92,9 @@ export const router = createBrowserRouter([
         path: "/dashboard/borrow-requests",
         element: (
           <PrivateRoute>
-            <UserPrivateRoute>
-              <BorrowRequests />,
-            </UserPrivateRoute>
+            <LibrarianRoute>
+              <BorrowRequests />
+            </LibrarianRoute>
           </PrivateRoute>
         ),
       },

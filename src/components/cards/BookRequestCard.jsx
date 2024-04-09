@@ -1,73 +1,10 @@
 import { MdOutlineCancel } from "react-icons/md";
 import { TiTickOutline } from "react-icons/ti";
-import { toast } from "sonner";
+
 import moment from "moment";
-import axios from "axios";
 
-const BookRequestCard = ({ request, refetch }) => {
+const BookRequestCard = ({ request, handleApprove, handleCancel }) => {
   const { _id } = request ?? {};
-
-  console.log({ request });
-
-  const handleCancel = async () => {
-    const consent = window.confirm("Cancel request?");
-    if (consent) {
-      try {
-        const promise = await axios.patch(`/book-request/update/${_id}`, {
-          status: "cancelled",
-        });
-        if (promise.status === 200) {
-          refetch();
-          toast.success(`Request Cancelled!`, {
-            id: "book",
-            duration: 2000,
-            position: "top-right",
-          });
-        }
-      } catch (error) {
-        console.log(error);
-
-        return toast.error(
-          error.response.data.message || `Something went wrong!`,
-          {
-            id: "book",
-            duration: 2000,
-            position: "top-right",
-          }
-        );
-      }
-    }
-  };
-
-  const handleApprove = async () => {
-    const consent = window.confirm("Approve request?");
-    if (consent) {
-      try {
-        const promise = await axios.patch(`/book-request/update/${_id}`, {
-          status: "approved",
-        });
-        if (promise.status === 200) {
-          refetch();
-          toast.success(`Request Approved!`, {
-            id: "book",
-            duration: 2000,
-            position: "top-right",
-          });
-        }
-      } catch (error) {
-        console.log(error);
-
-        return toast.error(
-          error.response.data.message || `Something went wrong!`,
-          {
-            id: "book",
-            duration: 2000,
-            position: "top-right",
-          }
-        );
-      }
-    }
-  };
 
   return (
     <div className="flex gap-4 justify-start items-start">

@@ -49,7 +49,7 @@ const AddBook = () => {
         setImageFile(null);
         setImagePreview(null);
         setLoading(false);
-        setData([]);
+        // setData([]);
       }
     } catch (error) {
       console.log(error);
@@ -86,9 +86,9 @@ const AddBook = () => {
           "https://www.googleapis.com/books/v1/volumes",
           {
             params: {
-              q: "Comedy",
+              q: searchValue,
               key: "AIzaSyBSK3Pnsh-wvplEf7bac88yxhwL7EEPORM",
-              maxResults: 9,
+              maxResults: 30,
             },
           }
         );
@@ -98,13 +98,13 @@ const AddBook = () => {
         console.error("Error fetching data:", error);
       }
     } else {
-      setData([]);
+      // setData([]);
     }
   };
 
-  useEffect(() => {
-    fetchData("react");
-  }, []);
+  // useEffect(() => {
+  //   fetchData("react");
+  // }, []);
 
   console.log({ bookData });
 

@@ -66,7 +66,8 @@ const SearchedBookCard = ({ book, handleAddBook }) => {
                       author,
                       item.volumeInfo.pageCount,
                       item.volumeInfo.language,
-                      item.volumeInfo.categories?.[0],
+                      // item.volumeInfo.categories?.[0],
+                      "Medical",
                       item.volumeInfo.publishedDate,
                       description,
                       thumbnail

@@ -33,7 +33,7 @@ const Books = () => {
 
       const queryString = new URLSearchParams(queryParams).toString();
 
-      const res = await axios.get(`/books?${queryString}`);
+      const res = await axios.get(`/books?${queryString}&limit=14`);
 
       return res.data.data;
     },

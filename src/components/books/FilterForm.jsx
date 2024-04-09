@@ -32,9 +32,10 @@ const FilterForm = () => {
           </option>
           <option value="Action">Action</option>
           <option value="Thriller">Thriller</option>
-          <option value="Epic">Epic</option>
-          <option value="Romantic">Romantic</option>
-          <option value="Fiction">Fiction</option>
+          <option value="Historical">Historical</option>
+          <option value="Programming">Programming</option>
+          <option value="Medical">Medical</option>
+          <option value="Comedy">Comedy</option>
         </select>
         <form
           onSubmit={handleSubmit}

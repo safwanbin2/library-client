@@ -2,44 +2,30 @@ import { useContext, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext/AuthProvider";
 import { FaCamera } from "react-icons/fa";
 import unknown from "../../../assets/unknown.jpg";
-import config from "../../../config";
 import { toast } from "sonner";
-import LoadingScreen from "../../LoadingScreen";
+import axios from "axios";
 
 const UploadImage = () => {
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setloading] = useState(false);
 
-  const { user, userDB } = useContext(AuthContext);
+  const { userDB } = useContext(AuthContext);
 
   const handleImageChange = async (e) => {
-    // const file = e.target.files[0];
-    // if (file) {
-    //   setloading(true);
-    //   const formdata = new FormData();
-    //   formdata.append("image", file);
-    //   console.log(formdata);
-    //   fetch(`${config.base_url}/users/upload?email=${user?.email}`, {
-    //     method: "POST",
-    //     body: formdata,
-    //   })
-    //     .then((res) => res.json())
-    //     .then((data) => {
-    //       console.log(data);
-    //       if (!data?.success) {
-    //         setloading(false);
-    //         return toast.error(data.message);
-    //       }
-    //       setSelectedImage(data.data.photo);
-    //       toast.success("Uploaded Successfully");
-    //       setloading(false);
-    //     })
-    //     .catch((err) => {
-    //       setloading(false);
-    //       console.log(err);
-    //       toast.error("Something went wrong");
-    //     });
-    // }
+    const file = e.target.files[0];
+    setSelectedImage(file);
+    setloading(true);
+    if (file) {
+      const formdata = new FormData();
+      formdata.append("image", file);
+
+      const result = await axios.patch(`/users/image/${userDB?._id}`, formdata);
+
+      if (result?.data?.statusCode === 200) {
+        toast.success("Image updated!");
+        setloading(false);
+      }
+    }
   };
 
   return (
@@ -59,15 +45,7 @@ const UploadImage = () => {
           />
         ) : (
           <img
-            src={
-              selectedImage
-                ? selectedImage
-                : userDB?.photo
-                ? userDB?.photo
-                : user?.photoURL
-                ? user?.photoURL
-                : unknown
-            }
+            src={userDB?.image}
             alt=""
             className="rounded-full size-24 border-4 border-primary"
           />

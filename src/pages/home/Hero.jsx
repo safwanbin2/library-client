@@ -1,12 +1,11 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import config from "../../config";
 
 const Hero = () => {
   const [searchText, setSearchText] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+
   const { setFilterObject } = useContext(AuthContext);
   const navigate = useNavigate();
 
@@ -19,24 +18,6 @@ const Hero = () => {
     navigate("/books");
   };
 
-  useEffect(() => {
-    if (searchText) {
-      // fetch(`${config.base_url}/books/search-suggestion?tag=${searchText}`)
-      //   .then((res) => res.json())
-      //   .then((data) => {
-      //     setSuggestions(data?.data);
-      //   })
-      //   .catch((err) => {
-      //     console.log(err);
-      //   });
-      setSuggestions([
-        { _id: 1, title: "A tale" },
-        { _id: 2, title: "A Book " },
-      ]);
-    } else {
-      setSuggestions([]);
-    }
-  }, [searchText]);
   return (
     <div className="min-h-screen hero">
       <div className="w-11/12 mx-auto flex justify-center items-center flex-col min-h-screen pt-28 pb-20 text-gray-100 gap-5">
@@ -54,7 +35,7 @@ const Hero = () => {
           <input
             onChange={(e) => setSearchText(e.target.value)}
             className=" outline-none bg-transparent rounded-full px-3 py-4 w-full text-gray-600"
-            type="search"
+            type="text"
             placeholder="Search for books"
           />
           <button
@@ -64,23 +45,6 @@ const Hero = () => {
             {/* <img src={searchBtn} alt="" /> */}
             <p className="text-base md:text-xl text-white">Search</p>
           </button>
-          {suggestions?.length ? (
-            <div className="absolute w-full top-[105%] left-0 bg-base-200 p-2 rounded-lg flex flex-col space-y-[8px]">
-              {suggestions?.length
-                ? suggestions.map((suggestion, i) => (
-                    <button
-                      className="bg-base-100 text-gray-600 rounded p-1 ps-2 text-start"
-                      key={i}
-                      onClick={() => setSearchText(`${suggestion?.title}`)}
-                    >
-                      {suggestion?.title}
-                    </button>
-                  ))
-                : ""}
-            </div>
-          ) : (
-            ""
-          )}
         </form>
       </div>
     </div>

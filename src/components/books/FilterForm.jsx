@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
+import axios from "axios";
 
 const FilterForm = () => {
-  const [searchText, setSearchText] = useState("");
-
   const { filterObject, setFilterObject } = useContext(AuthContext);
+  const [searchText, setSearchText] = useState(filterObject?.searchTerm || "");
+  const [suggestions, setSuggestions] = useState([]);
+  const [suggestionsSelected, setSuggestionsSelected] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -16,6 +18,28 @@ const FilterForm = () => {
       setFilterObject((prev) => ({ ...prev, searchTerm: searchText }));
     }
   }, [searchText]);
+
+  useEffect(() => {
+    if (searchText.trim() !== "" && !suggestionsSelected) {
+      const getData = async () => {
+        const response = await axios.get(
+          `/books?searchTerm=${searchText}&limit=10`
+        );
+
+        setSuggestions(response.data.data.data);
+      };
+
+      getData();
+    } else {
+      setSuggestions([]);
+    }
+  }, [searchText, suggestionsSelected]);
+
+  const handleSuggestions = (title) => {
+    setSuggestionsSelected(!suggestionsSelected);
+    setSearchText(title);
+    setSuggestions([]);
+  };
 
   return (
     <div className="space-y-1">
@@ -42,11 +66,14 @@ const FilterForm = () => {
           className="flex gap-2 rounded-full border bg-base-100 shadow w-full md:w-6/12 relative"
         >
           <input
-            onChange={(e) => setSearchText(e.target.value)}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+              setSuggestionsSelected(false);
+            }}
             className=" outline-none bg-transparent rounded-full px-3 py-3 w-full"
             type="text"
             placeholder="Search for books"
-            defaultValue={filterObject?.searchTerm}
+            value={searchText}
           />
           <button
             type="submit"
@@ -55,23 +82,23 @@ const FilterForm = () => {
             {/* <img src={searchBtn} alt="" /> */}
             <p className="text-base text-white">Search</p>
           </button>
-          {/* {suggestions?.length ? (
-            <div className="absolute w-full top-[105%] bg-base-300 p-2 rounded-lg flex flex-col space-y-[8px]">
+          {suggestions?.length ? (
+            <div className="absolute  w-[500px] top-[105%] rounded-md shadow-md left-5 bg-base-200 p-2 flex flex-col space-y-[8px]">
               {suggestions?.length
                 ? suggestions.map((suggestion, i) => (
                     <button
-                      className="bg-base-100 rounded p-1 ps-2 text-start"
+                      className="bg-base-100 text-gray-600 rounded p-1 ps-2 text-start"
                       key={i}
-                      onClick={() => setSearchText(`${suggestion?.firstName}`)}
+                      onClick={() => handleSuggestions(`${suggestion?.title}`)}
                     >
-                      {suggestion?.firstName}
+                      {suggestion?.title.slice(0, 50)}
                     </button>
                   ))
                 : ""}
             </div>
           ) : (
             ""
-          )} */}
+          )}
         </form>
       </div>
     </div>

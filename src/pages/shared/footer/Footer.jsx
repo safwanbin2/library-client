@@ -13,7 +13,7 @@ const Footer = () => {
           </Link>
           <p>
             <br />
-            Lorem, ipsum dolor. Lorem, ipsum.
+            Register now for unlimited access to books and resources
           </p>
         </div>
         <div>

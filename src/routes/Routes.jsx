@@ -19,6 +19,7 @@ import LibrarianRoute from "./LibrarianRotue";
 import UserPrivateRoute from "./UserPrivateRoute";
 import PrivateRoute from "./PrivateRoute";
 import MyBorrowings from "../pages/dashboard/myBorrowings/MyBorrowings";
+import ApprovedRequests from "../pages/dashboard/borrowRequest/ApproveRequest";
 
 export const router = createBrowserRouter([
   {
@@ -94,6 +95,16 @@ export const router = createBrowserRouter([
           <PrivateRoute>
             <LibrarianRoute>
               <BorrowRequests />
+            </LibrarianRoute>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/dashboard/approved-requests",
+        element: (
+          <PrivateRoute>
+            <LibrarianRoute>
+              <ApprovedRequests />
             </LibrarianRoute>
           </PrivateRoute>
         ),

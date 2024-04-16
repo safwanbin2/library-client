@@ -2,11 +2,11 @@ import RequestCard from "../../../components/dashboard/borrowRequest/RequestCard
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-const BorrowRequests = () => {
+const ApprovedRequests = () => {
   const { data: requests, refetch } = useQuery({
     queryKey: ["requests"],
     queryFn: async () => {
-      const res = await axios.get(`/borrow?status=pending`);
+      const res = await axios.get(`/borrow?status=approved`);
 
       return res.data.data;
     },
@@ -25,4 +25,4 @@ const BorrowRequests = () => {
   );
 };
 
-export default BorrowRequests;
+export default ApprovedRequests;

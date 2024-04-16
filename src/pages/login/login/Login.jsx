@@ -66,7 +66,7 @@ const Login = () => {
         setTimeout(() => {
           toast.success(`Logged in`, {
             id: "login",
-            duration: 2000,
+            duration: 1000,
             position: "top-right",
           });
           navigate("/");

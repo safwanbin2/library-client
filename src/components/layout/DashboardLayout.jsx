@@ -12,6 +12,7 @@ import { VscNewFile } from "react-icons/vsc";
 import { toast } from "sonner";
 import { SiBookstack } from "react-icons/si";
 import { BiBookReader } from "react-icons/bi";
+import { MdOutlineApproval } from "react-icons/md";
 
 const DashboardLayout = () => {
   const { logOut, userDB } = useContext(AuthContext);
@@ -130,6 +131,21 @@ const DashboardLayout = () => {
               <BiBookReader className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
               <span className="flex-1 ml-3 whitespace-nowrap">
                 Borrow Requests
+              </span>
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/dashboard/approved-requests"
+              className={({ isActive, isPending }) =>
+                `flex items-center p-2 rounded-lg  border-b-2 border-transparent hover:bg-base-200 ${
+                  isActive ? "bg-primary text-white" : ""
+                }`
+              }
+            >
+              <MdOutlineApproval className="flex-shrink-0 w-6 h-6  transition duration-75 group-hover:text-gray-900" />
+              <span className="flex-1 ml-3 whitespace-nowrap">
+                Approved Requests
               </span>
             </NavLink>
           </li>

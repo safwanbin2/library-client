@@ -108,20 +108,22 @@ const RequestCard = ({ request, refetch }) => {
             </h2>
           </div>
         </div>
-        <div className="space-x-2">
-          <button
-            onClick={() => handleCancel(request?._id)}
-            className="bg-error p-1 rounded-full text-white"
-          >
-            <MdOutlineCancel className="text-2xl" />
-          </button>
-          <button
-            onClick={() => handleApprove(request?._id)}
-            className="bg-primary p-1 rounded-full text-white"
-          >
-            <TiTickOutline className="text-2xl" />
-          </button>
-        </div>
+        {request?.status === "pending" && (
+          <div className="space-x-2">
+            <button
+              onClick={() => handleCancel(request?._id)}
+              className="bg-error p-1 rounded-full text-white"
+            >
+              <MdOutlineCancel className="text-2xl" />
+            </button>
+            <button
+              onClick={() => handleApprove(request?._id)}
+              className="bg-primary p-1 rounded-full text-white"
+            >
+              <TiTickOutline className="text-2xl" />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

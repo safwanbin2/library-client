@@ -21,7 +21,7 @@ const BookCard = ({ book }) => {
           </h2>
           <div className="flex items-center">
             <RiStarSLine className="text-xl text-yellow-500" />
-            <span className="text-sm font-semibold">5</span>
+            <span className="text-sm font-semibold">{book?.rating || 0}</span>
           </div>
         </div>
         {/* <p className="text-sm md:text-base text-gray-500">

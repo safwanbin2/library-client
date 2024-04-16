@@ -11,6 +11,7 @@ const FilterForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     setFilterObject((prev) => ({ ...prev, searchTerm: searchText }));
+    setSuggestions([]);
   };
 
   useEffect(() => {
@@ -19,26 +20,39 @@ const FilterForm = () => {
     }
   }, [searchText]);
 
-  useEffect(() => {
-    if (searchText.trim() !== "" && !suggestionsSelected) {
-      const getData = async () => {
-        const response = await axios.get(
-          `/books?searchTerm=${searchText}&limit=10`
-        );
+  const getData = async (input) => {
+    const response = await axios.get(`/books?title=${input}&limit=10`);
 
-        setSuggestions(response.data.data.data);
-      };
-
-      getData();
+    if (input) {
+      setSuggestions(response.data.data.data);
     } else {
       setSuggestions([]);
     }
-  }, [searchText, suggestionsSelected]);
+  };
+
+  useEffect(() => {
+    if (!searchText) {
+      setSuggestions([]);
+    }
+  }, [searchText]);
 
   const handleSuggestions = (title) => {
+    setFilterObject((prev) => ({ ...prev, searchTerm: title }));
     setSuggestionsSelected(!suggestionsSelected);
     setSearchText(title);
     setSuggestions([]);
+  };
+
+  const handleChange = (e) => {
+    const input = e.target.value;
+    getData(input);
+    setSearchText(input);
+
+    if (!searchText) {
+      setSuggestions([]);
+    }
+
+    setSuggestionsSelected(false);
   };
 
   return (
@@ -66,10 +80,7 @@ const FilterForm = () => {
           className="flex gap-2 rounded-full border bg-base-100 shadow w-full md:w-6/12 relative"
         >
           <input
-            onChange={(e) => {
-              setSearchText(e.target.value);
-              setSuggestionsSelected(false);
-            }}
+            onChange={handleChange}
             className=" outline-none bg-transparent rounded-full px-3 py-3 w-full"
             type="text"
             placeholder="Search for books"
@@ -91,7 +102,7 @@ const FilterForm = () => {
                       key={i}
                       onClick={() => handleSuggestions(`${suggestion?.title}`)}
                     >
-                      {suggestion?.title.slice(0, 50)}
+                      {suggestion?.title.slice(0, 40)}...
                     </button>
                   ))
                 : ""}

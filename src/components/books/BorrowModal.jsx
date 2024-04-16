@@ -1,12 +1,12 @@
 import axios from "axios";
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { toast } from "sonner";
 import { AuthContext } from "../../contexts/AuthContext/AuthProvider";
 
 const BorrowModal = ({ bookId }) => {
   const { userDB } = useContext(AuthContext);
   const [loading, setLoading] = useState(false);
-
+  const modalCheckboxRef = useRef(null);
   const handleRequest = async () => {
     setLoading(true);
     try {
@@ -24,6 +24,9 @@ const BorrowModal = ({ bookId }) => {
         });
 
         setLoading(false);
+        if (modalCheckboxRef.current) {
+          modalCheckboxRef.current.checked = false;
+        }
       }
     } catch (error) {
       console.log(error);
@@ -41,7 +44,12 @@ const BorrowModal = ({ bookId }) => {
 
   return (
     <>
-      <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+      <input
+        type="checkbox"
+        id="my_modal_6"
+        className="modal-toggle"
+        ref={modalCheckboxRef}
+      />
       <div className="modal" role="dialog">
         <div className="modal-box">
           <p className="py-4">Request for borrowing this book?</p>

@@ -5,6 +5,9 @@ import { toast } from "sonner";
 
 const BookCardAdmin = ({ book, refetch }) => {
   const { _id } = book ?? {};
+
+  console.log({ book });
+
   const handleDelete = async (id) => {
     try {
       const res = await axios.delete(`/books/delete/${id}`);
@@ -19,7 +22,7 @@ const BookCardAdmin = ({ book, refetch }) => {
     }
   };
   return (
-    <div className="md:space-y-2 w-[250px] md:w-[300px]">
+    <div className="md:space-y-2 w-[250px] md:w-[200px] hover:shadow-md hover:bg-gray-50">
       <img
         src={book?.image}
         className="rounded-t-xl w-full h-36 md:h-44 lg:h-64"
@@ -31,7 +34,7 @@ const BookCardAdmin = ({ book, refetch }) => {
             to={`/books/${_id}`}
             className="text-sm md:text-base font-semibold link"
           >
-            {book?.title}
+            {book?.title.slice(0, 50)}
           </Link>
           <div className="dropdown dropdown-bottom dropdown-end">
             <div tabIndex={0} role="button" className="">
@@ -54,9 +57,6 @@ const BookCardAdmin = ({ book, refetch }) => {
             </ul>
           </div>
         </div>
-        <p className="text-sm md:text-base text-gray-500">
-          {book?.description.slice(0, 100)}..
-        </p>
       </div>
     </div>
   );
